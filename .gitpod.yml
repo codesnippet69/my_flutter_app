@@ -1,13 +1,22 @@
+image: gitpod/workspace-full
+
 tasks:
-  - init: |
-      sudo apt update
-      sudo apt install -y openjdk-17-jdk unzip wget curl chromium-browser
+  - name: Setup Flutter
+    init: |
+      # Install Flutter
+      git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter
+      echo 'export PATH="$HOME/flutter/bin:$PATH"' >> $HOME/.bashrc
+      source $HOME/.bashrc
       flutter config --enable-web
       flutter doctor
-  - command: |
-      cd my_app
-      flutter pub get
+  - name: Install Android SDK
+    init: |
+      yes | sdkmanager --licenses
+      flutter doctor
 
-ports:
-  - port: 43167
-    onOpen: open-browser
+  - name: Run Flutter App
+    command: flutter run -d web-server
+
+vscode:
+  extensions:
+    - dart-code.flutter
