@@ -1,0 +1,13 @@
+tasks:
+  - init: |
+      sudo apt update
+      sudo apt install -y openjdk-17-jdk unzip wget curl chromium-browser
+      flutter config --enable-web
+      flutter doctor
+  - command: |
+      cd my_app
+      flutter pub get
+
+ports:
+  - port: 43167
+    onOpen: open-browser
